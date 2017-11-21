@@ -11,6 +11,15 @@ public class City<T> {
 
     // C O N S T R U C T O R
 
+    /**
+     * This is the default constructor for the
+     * City
+     *
+     * @param id    2 letter ID
+     * @param name  name of the city
+     * @param population    population of the city
+     * @param elevation elevation of the city
+     */
     public City(String id, String name,
                 int population, int elevation){
         this.ID = id;
@@ -37,5 +46,11 @@ public class City<T> {
         return ELEVATION;
     }
 
-
+    public String toString(){
+        return "ID:\t" + ID +
+                "\nNAME:\t" + NAME +
+                "\nPOP.:\t" + POPULATION +
+                "\nELV.:\t" + ELEVATION +
+                "\n";
+    }
 }

@@ -65,7 +65,6 @@ public class GraphBuilder {
             System.out.println("The file does not exist!");
             exit();
         }
-
     }
 
     /**
@@ -74,7 +73,30 @@ public class GraphBuilder {
      *          the road.dat file
      */
     private static void makeMap(){
+        File inputFile = new File("src/road.dat");
+        Scanner input = null;
 
+        try {
+            input = new Scanner(inputFile);
+            String inputString = input.nextLine();
+            Vertex<City> begin, end;
+
+            while(!inputString.isEmpty()) {
+                String[] info = inputString.trim().split("\\s\\s+");
+                begin = new Vertex<>(cities.getValue(Integer.parseInt(info[0])));
+                end = new Vertex<>(cities.getValue(Integer.parseInt(info[1])));
+                begin.connect(end, Integer.parseInt(info[2]));
+
+                System.out.println(begin + " --> " + end);
+
+                inputString = input.nextLine();
+            }
+
+            input.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("The file does not exist!");
+            exit();
+        }
     }
 
     /**

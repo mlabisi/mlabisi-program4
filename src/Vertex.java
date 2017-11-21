@@ -1,4 +1,7 @@
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /************************************************************
  * File:    Vertex.java
  * Author:  Mora Labisi
@@ -15,6 +18,27 @@ import java.util.Iterator;
  * that represents the Edge object and a Neighbor Iterator.
  ************************************************************/
 public class Vertex<T> implements VertexInterface<T>{
+    private T data;
+    private ArrayList<Edge> edgeList;
+    private VertexInterface<T> previous;
+    private boolean visited;
+    private int weight;
+
+    // C O N S T R U C T O R
+
+    /**
+     * This is the default constructor for the Vertex class
+     *
+     * @param data  the data that this vertex will hold
+     */
+    public Vertex(T data){
+        this.data = data;
+        edgeList = new ArrayList<>();
+        visited = false;
+        previous = null;
+        weight = 0;
+    }
+
     /**
      * method:  getLabel
      * purpose: gets this vertex's label
@@ -176,9 +200,70 @@ public class Vertex<T> implements VertexInterface<T>{
         return 0;
     }
 
-    private class Edge{
+//    public String toString(){
+//        return data.toString();
+//    }
 
+    /**
+     * This private inner class represents an edge object.
+     */
+    private class Edge{
+        private VertexInterface<T> dest;
+        private int weight;
+
+        public Edge(VertexInterface<T> dest, int weight){
+            this.dest = dest;
+            this.weight = weight;
+        }
+
+        public VertexInterface<T> getDest() {
+            return dest;
+        }
+
+        public int getWeight() {
+            return weight;
+        }
     }
 
-    // Neighbor Iterator
+    /**
+     * This private inner class will deal with edges to a vertex's
+     * adjacent vertices.
+     */
+    private class NeighborIterator implements Iterator<VertexInterface<T>>{
+        private Iterator<Edge> edges;
+
+        private NeighborIterator(){
+             edges = edgeList.listIterator();
+        }
+
+        /**
+         * method:  hasNext
+         * purpose: returns true if the iteration has more elements.
+         *
+         * @return true if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext() {
+            return edges.hasNext();
+        }
+
+        /**
+         * method:  next
+         * purpose: returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public VertexInterface<T> next() {
+            VertexInterface<T> nextNeighbor = null;
+            if(edges.hasNext()){
+                Edge edgeToNextNeighbor = edges.next();
+                nextNeighbor = edgeToNextNeighbor.getDest();
+            } else
+                throw new NoSuchElementException();
+
+            return nextNeighbor;
+        }
+    }
 }

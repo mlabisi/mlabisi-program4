@@ -22,10 +22,20 @@ public class GraphBuilder {
 
     private static WeightedGraphInterface<City> map = new DirectedGraph<>();
 
+    /**
+     * method:  start
+     * purpose: runs the appropriate methods for the program
+     */
     private static void start() {
         fillCities();
+        makeMap();
     }
 
+    /**
+     * method:  fillCities
+     * purpose: fills the static dictionary of cities with
+     *          the data from the city.dat file
+     */
     private static void fillCities() {
         File inputFile = new File("src/city.dat");
         Scanner input = null;
@@ -45,9 +55,8 @@ public class GraphBuilder {
                 population = Integer.parseInt(info[3]);
                 elevation = Integer.parseInt(info[4]);
 
-                System.out.println(id + " " + name + " " + population);
-
                 cities.add(code, new City(id, name, population, elevation));
+
                 inputString = input.nextLine();
             }
 
@@ -59,11 +68,30 @@ public class GraphBuilder {
 
     }
 
+    /**
+     * method:  makeMap
+     * purpose: creates our graph with the data from
+     *          the road.dat file
+     */
+    private static void makeMap(){
+
+    }
+
+    /**
+     * method:  exit
+     * purpose: exits the program
+     */
     private static void exit() {
         System.out.println("Bye!");
         System.exit(0);
     }
 
+    // M A I N   M E T H O D
+
+    /**
+     * method:  main
+     * purpose: this is the main method
+     */
     public static void main(String[] args) {
         start();
     }

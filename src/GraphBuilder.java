@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Scanner;
 
 /************************************************************
  * File:    GraphBuilder.java
@@ -26,34 +27,33 @@ public class GraphBuilder {
     }
 
     private static void fillCities() {
-        File inputFile = new File("city.dat");
-        FileInputStream input = null;
+        File inputFile = new File("src/city.dat");
+        Scanner input = null;
 
         try {
-            input = new FileInputStream(inputFile);
-            String inputString = input.toString();
-            String[] lines = inputString.split("\\r?\\n");
+            input = new Scanner(inputFile);
+            String inputString = input.nextLine();
 
             int code, population, elevation;
             String id, name;
 
-            for (String line : lines) {
-                String[] info = line.split("\\s");
+            while(!inputString.isEmpty()) {
+                String[] info = inputString.trim().split("\\s\\s+");
                 code = Integer.parseInt(info[0]);
                 id = info[1];
                 name = info[2];
                 population = Integer.parseInt(info[3]);
                 elevation = Integer.parseInt(info[4]);
 
+                System.out.println(id + " " + name + " " + population);
+
                 cities.add(code, new City(id, name, population, elevation));
+                inputString = input.nextLine();
             }
 
             input.close();
         } catch (FileNotFoundException e) {
             System.out.println("The file does not exist!");
-            exit();
-        } catch (IOException e) {
-            System.out.println("There was an error reading the file.");
             exit();
         }
 

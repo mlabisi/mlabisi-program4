@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /************************************************************
  * File:    DirectedGraph.java
@@ -24,6 +25,8 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
         vertices = new ArrayList<>();
         edgeCount = 0;
     }
+
+    // P R I V A T E   I N S T A N C E   M E T H O D S
 
     /**
      * method:  addVertex
@@ -59,6 +62,10 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
         if((beginVertex != null) && (endVertex != null))
             result = beginVertex.connect(endVertex, weight);
 
+        if(result){
+            edgeCount++;
+        }
+
         return result;
     }
 
@@ -73,7 +80,23 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
      */
     @Override
     public boolean hasEdge(T begin, T end) {
-        return false;
+        boolean found = false;
+
+        VertexInterface<T> beginVertex = vertices.get(vertices.indexOf(begin));
+        VertexInterface<T> endVertex = vertices.get(vertices.indexOf(end));
+
+        if((beginVertex != null) && (endVertex != null)){
+            Iterator<VertexInterface<T>> neighbors = beginVertex.getNeighborIterator();
+
+            while(!found && neighbors.hasNext()){
+                VertexInterface<T> nextNeighbor = neighbors.next();
+                if(endVertex.equals(nextNeighbor)){
+                    found = true;
+                }
+            }
+        }
+
+        return found;
     }
 
     /**
@@ -85,7 +108,7 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return vertices.isEmpty();
     }
 
     /**
@@ -96,7 +119,7 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
      */
     @Override
     public int getNumberOfVertices() {
-        return 0;
+        return vertices.size();
     }
 
     /**
@@ -107,7 +130,7 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
      */
     @Override
     public int getNumberOfEdges() {
-        return 0;
+        return edgeCount;
     }
 
     /**
@@ -116,7 +139,8 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
      */
     @Override
     public void clear() {
-
+        vertices.clear();
+        edgeCount = 0;
     }
 
     /**

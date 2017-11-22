@@ -178,18 +178,34 @@ public class GraphBuilder {
         }
     }
 
+    /**
+     * method:  query
+     * purpose: queries the given city's information
+     */
     private static void query(){
 
     }
 
+    /**
+     * method:  insert
+     * purpose: inserts a road/edge between two given cities
+     */
     private static void insert(){
 
     }
 
+    /**
+     * method:  findDistance
+     * purpose: finds the minimum distance between two cities
+     */
     private static void findDistance(){
 
     }
 
+    /**
+     * method:  removeRoad
+     * purpose: removes an existing road
+     */
     private static void removeRoad(){
 
     }

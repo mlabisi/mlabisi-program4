@@ -1,5 +1,7 @@
 public class City<T> {
 
+    private final int CODE;
+
     private final String ID;
 
     private final String NAME;
@@ -15,13 +17,15 @@ public class City<T> {
      * This is the default constructor for the
      * City
      *
+     * @param code  integer code for city
      * @param id    2 letter ID
      * @param name  name of the city
      * @param population    population of the city
      * @param elevation elevation of the city
      */
-    public City(String id, String name,
+    public City(int code, String id, String name,
                 int population, int elevation){
+        this.CODE = code;
         this.ID = id;
         this.NAME = name;
         this.POPULATION = population;
@@ -29,6 +33,11 @@ public class City<T> {
     }
 
     // G E T T E R S
+
+
+    public int getCODE() {
+        return CODE;
+    }
 
     public String getID() {
         return ID;

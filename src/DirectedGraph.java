@@ -56,8 +56,8 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
     public boolean addEdge(T begin, T end, int weight) {
         boolean result = false;
 
-        VertexInterface<T> beginVertex = vertices.get(vertices.indexOf(begin));
-        VertexInterface<T> endVertex = vertices.get(vertices.indexOf(end));
+        VertexInterface<T> beginVertex = findVertex(begin);
+        VertexInterface<T> endVertex = findVertex(end);
 
         if((beginVertex != null) && (endVertex != null))
             result = beginVertex.connect(endVertex, weight);
@@ -67,6 +67,17 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
         }
 
         return result;
+    }
+
+    private VertexInterface<T> findVertex(T value){
+        VertexInterface<T> found = null;
+        for(VertexInterface<T> vertex : vertices){
+            if(vertex.getLabel() == value){
+                found = vertex;
+            }
+        }
+
+        return found;
     }
 
     /**

@@ -57,7 +57,7 @@ public class GraphBuilder {
                 elevation = Integer.parseInt(info[4]);
 
 
-                cities.add(new City(id, name, population, elevation));
+                cities.add(new City(code, id, name, population, elevation));
                 map.addVertex(cities.get(cities.size() - 1));
 
                 inputString = input.nextLine();
@@ -82,7 +82,6 @@ public class GraphBuilder {
         try {
             input = new Scanner(inputFile);
             String inputString = input.nextLine();
-            Vertex<City> begin, end;
 
             while(input.hasNext()) {
                 String[] info = inputString.trim().split("\\s\\s+");

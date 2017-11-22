@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /************************************************************
  * File:    DirectedGraph.java
  * Author:  Mora Labisi
@@ -13,13 +15,13 @@
  * Graph data type. It uses vertices and edges.
  ************************************************************/
 public class DirectedGraph<T> implements WeightedGraphInterface<T> {
-    private DictionaryInterface<T, VertexInterface<T>> verticies;
+    private ArrayList<VertexInterface<T>> vertices;
     private int edgeCount;
 
     // C O N S T R U C T O R
 
     public DirectedGraph(){
-        verticies = new LinkedDictionary<>();
+        vertices = new ArrayList<>();
         edgeCount = 0;
     }
 
@@ -34,8 +36,7 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
      */
     @Override
     public boolean addVertex(T vertexLabel) {
-        VertexInterface<T> addOutcome = verticies.add(vertexLabel, new Vertex<>(vertexLabel));
-        return addOutcome == null;
+        return vertices.add(new Vertex<>(vertexLabel));
     }
 
     /**
@@ -52,11 +53,13 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
     public boolean addEdge(T begin, T end, int weight) {
         boolean result = false;
 
-        VertexInterface<T> beginVertex = verticies.getValue(begin);
-        VertexInterface<T> endVertex = verticies.getValue(end);
+        VertexInterface<T> beginVertex = vertices.get(vertices.indexOf(begin));
+        VertexInterface<T> endVertex = vertices.get(vertices.indexOf(end));
 
         if((beginVertex != null) && (endVertex != null))
             result = beginVertex.connect(endVertex, weight);
+
+        return result;
     }
 
     /**

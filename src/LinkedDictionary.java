@@ -1,6 +1,6 @@
 import java.util.Iterator;
 /************************************************************
- * File:    Dictionary.java
+ * File:    LinkedDictionary.java
  * Author:  Mora Labisi
  * Course:  CS 241.01 Data Structures and Algorithms II
  *
@@ -10,10 +10,10 @@ import java.util.Iterator;
  * Last Modified:   11/21/17
  *
  * Description:
- * This java class is the implementation of the Dictionary
+ * This java class is the implementation of the LinkedDictionary
  * data structure.
  ************************************************************/
-public class Dictionary<K, T> implements DictionaryInterface<K, T> {
+public class LinkedDictionary<K, T> implements DictionaryInterface<K, T> {
     /**
      * method:  add
      * purpose: adds a new entry to the dictionary; replaces existing

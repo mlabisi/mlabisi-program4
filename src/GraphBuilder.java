@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /************************************************************
@@ -18,7 +19,7 @@ import java.util.Scanner;
  * vertices
  ************************************************************/
 public class GraphBuilder {
-    private static DictionaryInterface<Integer, City> cities = new Dictionary<>();
+    private static ArrayList<City> cities = new ArrayList<>(20);
 
     private static WeightedGraphInterface<City> map = new DirectedGraph<>();
 
@@ -55,11 +56,13 @@ public class GraphBuilder {
                 population = Integer.parseInt(info[3]);
                 elevation = Integer.parseInt(info[4]);
 
-                cities.add(code, new City(id, name, population, elevation));
+
+                cities.add(new City(id, name, population, elevation));
+                map.addVertex(cities.get(cities.size() - 1));
 
                 inputString = input.nextLine();
             }
-
+            System.out.println(cities);
             input.close();
         } catch (FileNotFoundException e) {
             System.out.println("The file does not exist!");
@@ -81,13 +84,11 @@ public class GraphBuilder {
             String inputString = input.nextLine();
             Vertex<City> begin, end;
 
-            while(!inputString.isEmpty()) {
+            while(input.hasNext()) {
                 String[] info = inputString.trim().split("\\s\\s+");
-                begin = new Vertex<>(cities.getValue(Integer.parseInt(info[0])));
-                end = new Vertex<>(cities.getValue(Integer.parseInt(info[1])));
-                begin.connect(end, Integer.parseInt(info[2]));
-
-                System.out.println(begin + " --> " + end);
+                map.addEdge(cities.get(Integer.parseInt(info[0]) - 1),
+                        cities.get(Integer.parseInt(info[1]) - 1),
+                        Integer.parseInt(info[2]));
 
                 inputString = input.nextLine();
             }

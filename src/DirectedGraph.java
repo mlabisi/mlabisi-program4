@@ -13,6 +13,16 @@
  * Graph data type. It uses vertices and edges.
  ************************************************************/
 public class DirectedGraph<T> implements WeightedGraphInterface<T> {
+    private DictionaryInterface<T, VertexInterface<T>> verticies;
+    private int edgeCount;
+
+    // C O N S T R U C T O R
+
+    public DirectedGraph(){
+        verticies = new LinkedDictionary<>();
+        edgeCount = 0;
+    }
+
     /**
      * method:  addVertex
      * purpose: adds a given vertex to the graph
@@ -24,7 +34,8 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
      */
     @Override
     public boolean addVertex(T vertexLabel) {
-        return false;
+        VertexInterface<T> addOutcome = verticies.add(vertexLabel, new Vertex<>(vertexLabel));
+        return addOutcome == null;
     }
 
     /**
@@ -39,7 +50,13 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
      */
     @Override
     public boolean addEdge(T begin, T end, int weight) {
-        return false;
+        boolean result = false;
+
+        VertexInterface<T> beginVertex = verticies.getValue(begin);
+        VertexInterface<T> endVertex = verticies.getValue(end);
+
+        if((beginVertex != null) && (endVertex != null))
+            result = beginVertex.connect(endVertex, weight);
     }
 
     /**

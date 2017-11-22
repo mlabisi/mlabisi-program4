@@ -10,9 +10,9 @@ import java.util.Iterator;
  * Last Modified:   11/20/17
  *
  * Description:
- * This java interface is the implementation of the Dictionary
+ * This java interface is the implementation of the LinkedDictionary
  * data structure. It includes the method signatures
- * for the required functions of a Dictionary.
+ * for the required functions of a LinkedDictionary.
  ************************************************************/
 public interface DictionaryInterface<K, T> {
 

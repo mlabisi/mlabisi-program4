@@ -30,6 +30,78 @@ public class GraphBuilder {
     private static void start() {
         fillCities();
         makeMap();
+        helpMenu();
+        run();
+    }
+
+    /**
+     * method:  helpMenu
+     * purpose: displays the help menu with the features of this program
+     */
+    private static void helpMenu() {
+        System.out.println("-----HELP MENU-----\n"
+                + " Q - Query the city information by entering the city code\n"
+                + " D - Find the minimum distance between two cities\n"
+                + " I - Insert a road by entering two city codes and distance\n"
+                + " R - Remove an existing road by entering two city codes\n"
+                + " H - display this menu\n"
+                + " E - exit the program");
+    } // end helpMenu
+
+    /**
+     * method:  run
+     * purpose: this loop, whose actions are based on user input,
+     * will run until the user enters the command to
+     * exit the program
+     */
+    private static void run() {
+        boolean running = true;
+
+        while (running) {
+            String answer = getUserInput().toUpperCase();
+
+            try {
+                switch (answer) {
+                    case "Q":
+                        query();
+                        break;
+                    case "D":
+                        findDistance();
+                        break;
+                    case "I":
+                        insert();
+                        break;
+                    case "R":
+                        removeRoad();
+                        break;
+                    case "H":
+                        helpMenu();
+                        break;
+                    case "E":
+                        running = false;
+                        break;
+                    default:
+                        System.out.println("Sorry, your command did not work. Please try again (type 'H' for help).");
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("There was an error processing your command. Please try again.");
+                run();
+            }
+        }
+        exit();
+    }
+
+    /**
+     * method:  getUserInput
+     * purpose: display a '>' to prompt user input, then retrieve the input
+     *
+     * @return the user input
+     */
+    private static String getUserInput() {
+        Scanner in = new Scanner(System.in);
+        System.out.print("> ");
+        return in.nextLine();
     }
 
     /**
@@ -104,6 +176,22 @@ public class GraphBuilder {
             System.out.println("The file does not exist!");
             exit();
         }
+    }
+
+    private static void query(){
+
+    }
+
+    private static void insert(){
+
+    }
+
+    private static void findDistance(){
+
+    }
+
+    private static void removeRoad(){
+
     }
 
     /**

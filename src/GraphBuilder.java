@@ -62,7 +62,9 @@ public class GraphBuilder {
 
                 inputString = input.nextLine();
             }
+            // FOR TESTING
             System.out.println(cities);
+
             input.close();
         } catch (FileNotFoundException e) {
             System.out.println("The file does not exist!");
@@ -89,6 +91,11 @@ public class GraphBuilder {
                         cities.get(Integer.parseInt(info[1]) - 1),
                         Integer.parseInt(info[2]));
 
+                // FOR TESTING
+                System.out.println(cities.get(Integer.parseInt(info[0]) - 1).getNAME() +
+                        " --> " +
+                        cities.get(Integer.parseInt(info[1]) - 1).getNAME() +
+                        " (" + Integer.parseInt(info[2]) + ")");
                 inputString = input.nextLine();
             }
 

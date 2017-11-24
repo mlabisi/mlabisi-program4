@@ -250,6 +250,11 @@ public class Vertex<T> implements VertexInterface<T>{
         return result;
     }
 
+    @Override
+    public String toString() {
+        return label.toString();
+    }
+
     // I N N E R   C L A S S E S
 
     /**

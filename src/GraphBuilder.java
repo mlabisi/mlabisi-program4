@@ -82,7 +82,6 @@ public class GraphBuilder {
                         break;
                     default:
                         System.out.println("Sorry, your command did not work. Please try again (type 'H' for help).");
-                        break;
                 }
             } catch (NumberFormatException e) {
                 System.out.println("There was an error processing your command. Please try again.");
@@ -183,7 +182,16 @@ public class GraphBuilder {
      * purpose: queries the given city's information
      */
     private static void query(){
+        System.out.println("Please enter the city ID.");
+        String id = getUserInput();
 
+        try {
+            String info = ((DirectedGraph<City>)map).displayVertex(findCity(id.trim()));
+            System.out.print(info);
+        } catch(NullPointerException e){
+            System.out.println("That city ID was not recognized!");
+            helpMenu();
+        }
     }
 
     /**
@@ -208,6 +216,17 @@ public class GraphBuilder {
      */
     private static void removeRoad(){
 
+    }
+
+    private static City findCity(String id){
+        City found = null;
+        for(City city : cities){
+            if((city.getID()).equalsIgnoreCase(id)){
+                found = city;
+            }
+        }
+
+        return found;
     }
 
     /**

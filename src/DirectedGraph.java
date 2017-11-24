@@ -144,6 +144,11 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
         return edgeCount;
     }
 
+    public String displayVertex(T label){
+        VertexInterface<T> myVertex = findVertex(label);
+        return myVertex.toString();
+    }
+
     /**
      * method:  clear
      * purpose: removes all vertices and edges from the graph

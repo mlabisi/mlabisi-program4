@@ -56,7 +56,7 @@ public class City<T> {
     }
 
     public String toString(){
-        return "ID:\t" + ID +
+        return "ID:\t\t" + ID +
                 "\nNAME:\t" + NAME +
                 "\nPOP:\t" + POPULATION +
                 "\nELV:\t" + ELEVATION +

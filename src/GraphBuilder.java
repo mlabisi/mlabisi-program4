@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /************************************************************
@@ -44,6 +45,8 @@ public class GraphBuilder {
                 + " D - Find the minimum distance between two cities\n"
                 + " I - Insert a road by entering two city codes and distance\n"
                 + " R - Remove an existing road by entering two city codes\n"
+                //+ " M - Display the map's roads\n"
+                + " C - Display all of the map's cities and their data\n"
                 + " H - display this menu\n"
                 + " E - exit the program");
     } // end helpMenu
@@ -73,6 +76,11 @@ public class GraphBuilder {
                         break;
                     case "R":
                         removeRoad();
+                        break;
+                    case "M":
+                        break;
+                    case "C":
+                        System.out.println(cities);
                         break;
                     case "H":
                         helpMenu();
@@ -183,13 +191,17 @@ public class GraphBuilder {
      */
     private static void query(){
         System.out.println("Please enter the city ID.");
-        String id = getUserInput();
+        String id = null;
 
         try {
+            id = getUserInput();
             String info = ((DirectedGraph<City>)map).displayVertex(findCity(id.trim()));
             System.out.print(info);
         } catch(NullPointerException e){
             System.out.println("That city ID was not recognized!");
+            helpMenu();
+        } catch (InputMismatchException e){
+            System.out.println("There was an error with your input.");
             helpMenu();
         }
     }
@@ -199,7 +211,32 @@ public class GraphBuilder {
      * purpose: inserts a road/edge between two given cities
      */
     private static void insert(){
+        System.out.println("Please enter the city IDs separated by a space.");
+        String input = null;
+        int distance = 0;
 
+        try {
+            input = getUserInput();
+
+            System.out.println("Please enter the distance between the cities.");
+            distance = Integer.parseInt(getUserInput());
+
+            String[] cities = input.split("\\s");
+            City city1 = findCity(cities[0]);
+            City city2 = findCity(cities[1]);
+
+            map.addEdge(city1, city2, distance);
+            System.out.println(city1.getNAME() +
+                        " --> " +
+                        city2.getNAME() +
+                        " (" + distance + ")");
+        } catch(NullPointerException e){
+            System.out.println("One or both of your city IDs were not recognized!");
+            helpMenu();
+        } catch (InputMismatchException e){
+            System.out.println("There was an error with your input.");
+            helpMenu();
+        }
     }
 
     /**
@@ -236,6 +273,7 @@ public class GraphBuilder {
 
         return found;
     }
+
 
     /**
      * method:  exit

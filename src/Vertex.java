@@ -40,6 +40,8 @@ public class Vertex<T> implements VertexInterface<T> {
         weight = 0;
     }
 
+    // G E T T E R S
+
     /**
      * method:  getLabel
      * purpose: gets this vertex's label
@@ -51,38 +53,49 @@ public class Vertex<T> implements VertexInterface<T> {
         return label;
     }
 
-    // D I J K S T R A ' S   H E L P E R   M E T H O D S
-
     /**
-     * method:  visit
-     * purpose: marks this vertex as visited
-     */
-    @Override
-    public void visit() {
-        visited = true;
-    }
-
-    /**
-     * method:  unvisit
-     * purpose: removes the visited mark for this vertex
-     */
-    @Override
-    public void unvisit() {
-        visited = false;
-    }
-
-    /**
-     * method:  isVisited
-     * purpose: checks whether this vertex has been visited
+     * method:  getDistance
+     * purpose: gets the distance of the edge between this vertex
+     *          and a given destination vertex
      *
-     * @return true or false depending on whether or not
-     * this vertex has been visited
+     * @param end   the destination vertex
+     * @return  the distance
      */
-    @Override
-    public boolean isVisited() {
-        return visited;
+    public int getDistance(VertexInterface<T> end) {
+        int distance = 0;
+        for (Edge anEdge : edgeList) {
+            if (anEdge.getDest().equals(end)) {
+                distance = anEdge.getWeight();
+                break;
+            }
+        }
+        return distance;
     }
 
+    /**
+     * method:  getNeighborIterator
+     * purpose: creates an iterator of this vertex's neighbors
+     *
+     * @return an iterator of neighboring vertices
+     */
+    @Override
+    public Iterator<VertexInterface<T>> getNeighborIterator() {
+        return new NeighborIterator();
+    }
+
+    /**
+     * method:  getWeightIterator
+     * purpose: creates an iterator of the weights of the edges
+     * that connect this vertex to its neighbors
+     *
+     * @return an iterator of edge weights
+     */
+    @Override
+    public Iterator<Integer> getWeightIterator() {
+        return new WeightIterator();
+    }
+
+    // P U B L I C   I N S T A N C E   M E T H O D S
     /**
      * method:  connect
      * purpose: connects this vertex to a given vertex with a
@@ -124,38 +137,60 @@ public class Vertex<T> implements VertexInterface<T> {
         return result;
     }
 
-    public int getDistance(VertexInterface<T> end) {
-        int distance = 0;
-        for (Edge anEdge : edgeList) {
-            if (anEdge.getDest().equals(end)) {
-                distance = anEdge.getWeight();
-                break;
-            }
-        }
-        return distance;
+    // D I J K S T R A ' S   H E L P E R   M E T H O D S
+
+    /**
+     * method:  getWeight
+     * purpose: gets the recorded cost of the path to this
+     * vertex
+     *
+     * @return the cost of the path
+     */
+    @Override
+    public int getWeight() {
+        return weight;
     }
 
     /**
-     * method:  getNeighborIterator
-     * purpose: creates an iterator of this vertex's neighbors
+     * method:  setWeight
+     * purpose: records the shortest weight of a path
+     * to this vertex
      *
-     * @return an iterator of neighboring vertices
+     * @param weight
      */
     @Override
-    public Iterator<VertexInterface<T>> getNeighborIterator() {
-        return new NeighborIterator();
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
     /**
-     * method:  getWeightIterator
-     * purpose: creates an iterator of the weights of the edges
-     * that connect this vertex to its neighbors
-     *
-     * @return an iterator of edge weights
+     * method:  visit
+     * purpose: marks this vertex as visited
      */
     @Override
-    public Iterator<Integer> getWeightIterator() {
-        return new WeightIterator();
+    public void visit() {
+        visited = true;
+    }
+
+    /**
+     * method:  unvisit
+     * purpose: removes the visited mark for this vertex
+     */
+    @Override
+    public void unvisit() {
+        visited = false;
+    }
+
+    /**
+     * method:  isVisited
+     * purpose: checks whether this vertex has been visited
+     *
+     * @return true or false depending on whether or not
+     * this vertex has been visited
+     */
+    @Override
+    public boolean isVisited() {
+        return visited;
     }
 
     /**
@@ -225,29 +260,8 @@ public class Vertex<T> implements VertexInterface<T> {
         return previous != null;
     }
 
-    /**
-     * method:  setCost
-     * purpose: records the shortest weight of a path
-     * to this vertex
-     *
-     * @param weight
-     */
-    @Override
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
+    // H E L P E R   M E T H O D S
 
-    /**
-     * method:  getWeight
-     * purpose: gets the recorded cost of the path to this
-     * vertex
-     *
-     * @return the cost of the path
-     */
-    @Override
-    public int getWeight() {
-        return weight;
-    }
 
     /**
      * method:  updateEdges
@@ -289,6 +303,12 @@ public class Vertex<T> implements VertexInterface<T> {
         return result;
     }
 
+    /**
+     * method:  toString
+     * purpose: gets the String representation of the vertex
+     *
+     * @return  the vertex's label as a String
+     */
     @Override
     public String toString() {
         return label.toString();
@@ -303,19 +323,43 @@ public class Vertex<T> implements VertexInterface<T> {
         private VertexInterface<T> dest;
         private int weight;
 
+        /**
+         * This is the default constructor for the Edge class.
+         *
+         * @param dest  the destination vertex
+         * @param weight    the weight of the edge
+         */
         private Edge(VertexInterface<T> dest, int weight) {
             this.dest = dest;
             this.weight = weight;
         }
 
+        /**
+         * method:  getDest
+         * purpose: gets the destination vertex
+         *
+         * @return  the destination vertex
+         */
         private VertexInterface<T> getDest() {
             return dest;
         }
 
+        /**
+         * method:  getWeight
+         * purpose: gets the weight of the edge
+         *
+         * @return  the weight of the edge
+         */
         private int getWeight() {
             return weight;
         }
 
+        /**
+         * method:  setWeight
+         * purpose: sets the weight of this edge
+         *
+         * @param weight    the weight to be set
+         */
         private void setWeight(int weight) {
             this.weight = weight;
         }
@@ -328,6 +372,9 @@ public class Vertex<T> implements VertexInterface<T> {
     private class NeighborIterator implements Iterator<VertexInterface<T>> {
         private Iterator<Edge> edges;
 
+        /**
+         * This is the default constructor for the NeighborIterator.
+         */
         private NeighborIterator() {
             edges = edgeList.listIterator();
         }
@@ -371,6 +418,9 @@ public class Vertex<T> implements VertexInterface<T> {
 
         private Iterator<Edge> edges;
 
+        /**
+         * This is the default constructor for the WeightIterator.
+         */
         private WeightIterator() {
             edges = edgeList.listIterator();
         }

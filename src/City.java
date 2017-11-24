@@ -48,26 +48,63 @@ public class City<T> {
     // G E T T E R S
 
 
+    /**
+     * method:  getCODE
+     * purpose: gets this city's code
+     *
+     * @return  this city's code
+     */
     public int getCODE() {
         return CODE;
     }
 
+    /**
+     * method:  getID
+     * purpose: gets this city's ID
+     *
+     * @return  this city's ID
+     */
     public String getID() {
         return ID;
     }
 
+    /**
+     * method:  getNAME
+     * purpose: gets this city's name
+     *
+     * @return  this city's name
+     */
     public String getNAME() {
         return NAME;
     }
 
+    /**
+     * method:  getPOPULATION
+     * purpose: gets this city's population
+     *
+     * @return  this city's population
+     */
     public int getPOPULATION() {
         return POPULATION;
     }
 
+    /**
+     * method:  getELEVATION
+     * purpose: gets this city's elevation
+     *
+     * @return  this city's elevation
+     */
     public int getELEVATION() {
         return ELEVATION;
     }
 
+    /**
+     * method:  getInfo
+     * purpose: gets this city's id, name, population,
+     *          and elevation
+     *
+     * @return  this city's info
+     */
     public String getInfo(){
         return "ID:\t\t" + ID +
                 "\nNAME:\t" + NAME +
@@ -76,6 +113,12 @@ public class City<T> {
                 "\n";
     }
 
+    /**
+     * method:  getString
+     * purpose: gets the String representation of the city
+     *
+     * @return  this city's name
+     */
     public String toString(){
         return NAME;
     }

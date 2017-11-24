@@ -21,6 +21,10 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
 
     // C O N S T R U C T O R
 
+    /**
+     * This is the default constructor for the DirectedGraph
+     * class.
+     */
     public DirectedGraph(){
         vertices = new ArrayList<>();
         edgeCount = 0;
@@ -153,11 +157,6 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
     @Override
     public int getNumberOfEdges() {
         return edgeCount;
-    }
-
-    public String displayVertex(T label){
-        VertexInterface<T> myVertex = findVertex(label);
-        return myVertex.toString();
     }
 
     public void displayEdges(){

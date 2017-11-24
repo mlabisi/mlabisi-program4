@@ -78,7 +78,7 @@ public class GraphBuilder {
                         removeRoad();
                         break;
                     case "C":
-                        System.out.println(cities);
+                        viewCities();
                         break;
                     case "M":
                         viewEdges();
@@ -315,12 +315,23 @@ public class GraphBuilder {
         return found;
     }
 
+    /**
+     * method:  viewCities
+     * purpose: this helper method displays the name of all
+     *          cities in the map
+     */
     private static void viewCities(){
         for (City aCity: cities) {
-            System.out.println(aCity.getInfo());
+            System.out.println(aCity);
         }
     }
 
+
+    /**
+     * method:  viewEdges
+     * purpose: this helper method displays all of the
+     *          roads in the map
+     */
     private static void viewEdges(){
         ((DirectedGraph)map).displayEdges();
     }

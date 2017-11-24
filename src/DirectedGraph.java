@@ -69,6 +69,14 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
         return result;
     }
 
+    /**
+     * method:  findVertex
+     * purpose: this helper method will find the vertex
+     *          whose label matches the given data
+     *
+     * @param value the value of the label
+     * @return  the vertex or null if not found
+     */
     private VertexInterface<T> findVertex(T value){
         VertexInterface<T> found = null;
         for(VertexInterface<T> vertex : vertices){

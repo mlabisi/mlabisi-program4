@@ -218,6 +218,14 @@ public class GraphBuilder {
 
     }
 
+    /**
+     * method:  findCity
+     * purpose: this helper method will find the city
+     *          whose ID matches the given data
+     *
+     * @param id    the ID of the city
+     * @return  the city or null if not found
+     */
     private static City findCity(String id){
         City found = null;
         for(City city : cities){

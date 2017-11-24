@@ -9,7 +9,7 @@ import java.util.Iterator;
  * Assignment:  Program Four
  * Due:         Thursday, 11/30/2017
  *
- * Last Modified:   11/21/17
+ * Last Modified:   11/23/17
  *
  * Description:
  * This java class is the implementation of the Directed
@@ -62,8 +62,10 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
         if((beginVertex != null) && (endVertex != null))
             result = beginVertex.connect(endVertex, weight);
 
-        if(result){
+        if(result && weight > 0){
             edgeCount++;
+        } else if (result && (weight == 0)){
+            edgeCount--;
         }
 
         return result;
@@ -101,8 +103,9 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
     public boolean hasEdge(T begin, T end) {
         boolean found = false;
 
-        VertexInterface<T> beginVertex = vertices.get(vertices.indexOf(begin));
-        VertexInterface<T> endVertex = vertices.get(vertices.indexOf(end));
+
+        VertexInterface<T> beginVertex = findVertex(begin);
+        VertexInterface<T> endVertex = findVertex(end);
 
         if((beginVertex != null) && (endVertex != null)){
             Iterator<VertexInterface<T>> neighbors = beginVertex.getNeighborIterator();

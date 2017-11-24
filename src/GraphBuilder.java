@@ -11,7 +11,7 @@ import java.util.Scanner;
  * Assignment:  Program Four
  * Due:         Thursday, 11/30/2017
  *
- * Last Modified:   11/21/17
+ * Last Modified:   11/23/17
  *
  * Description:
  * This class is the user interface for this program assignment.
@@ -45,7 +45,6 @@ public class GraphBuilder {
                 + " D - Find the minimum distance between two cities\n"
                 + " I - Insert a road by entering two city codes and distance\n"
                 + " R - Remove an existing road by entering two city codes\n"
-                //+ " M - Display the map's roads\n"
                 + " C - Display all of the map's cities and their data\n"
                 + " H - display this menu\n"
                 + " E - exit the program");
@@ -77,8 +76,6 @@ public class GraphBuilder {
                     case "R":
                         removeRoad();
                         break;
-                    case "M":
-                        break;
                     case "C":
                         System.out.println(cities);
                         break;
@@ -92,23 +89,11 @@ public class GraphBuilder {
                         System.out.println("Sorry, your command did not work. Please try again (type 'H' for help).");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("There was an error processing your command. Please try again.");
+                System.out.println("You have to enter a number!");
                 run();
             }
         }
         exit();
-    }
-
-    /**
-     * method:  getUserInput
-     * purpose: display a '>' to prompt user input, then retrieve the input
-     *
-     * @return the user input
-     */
-    private static String getUserInput() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("> ");
-        return in.nextLine();
     }
 
     /**
@@ -207,6 +192,33 @@ public class GraphBuilder {
     }
 
     /**
+     * method:  findDistance
+     * purpose: finds the minimum distance between two cities
+     */
+    private static void findDistance(){
+        System.out.println("Please enter the city IDs separated by a space.");
+        String input = null;
+
+        try {
+            input = getUserInput();
+
+            String[] cities = input.split("\\s");
+            City city1 = findCity(cities[0]);
+            City city2 = findCity(cities[1]);
+
+            String result = map.getShortestPath(city1, city2);
+            System.out.println(result);
+
+        } catch(NullPointerException e){
+            System.out.println("One or both of your city IDs were not recognized!");
+            helpMenu();
+        } catch (InputMismatchException e){
+            System.out.println("There was an error with your input.");
+            helpMenu();
+        }
+    }
+
+    /**
      * method:  insert
      * purpose: inserts a road/edge between two given cities
      */
@@ -236,15 +248,10 @@ public class GraphBuilder {
         } catch (InputMismatchException e){
             System.out.println("There was an error with your input.");
             helpMenu();
+        } catch (NumberFormatException e) {
+            System.out.println("You have to enter the distance as a number!");
+            insert();
         }
-    }
-
-    /**
-     * method:  findDistance
-     * purpose: finds the minimum distance between two cities
-     */
-    private static void findDistance(){
-
     }
 
     /**
@@ -252,7 +259,37 @@ public class GraphBuilder {
      * purpose: removes an existing road
      */
     private static void removeRoad(){
+        System.out.println("Please enter the city IDs separated by a space.");
+        String input = null;
 
+        try {
+            input = getUserInput();
+
+            String[] cities = input.split("\\s");
+            City city1 = findCity(cities[0]);
+            City city2 = findCity(cities[1]);
+
+            if(map.hasEdge(city1, city2)){
+                if(map.addEdge(city1, city2, 0)){
+                    System.out.println("The road between " + city1.getNAME()
+                    + " and " + city2.getNAME()
+                    + " has been removed.");
+                } else
+                    System.out.println("There was an error removing the road between " +
+                    city1.getNAME() + " and " + city2.getNAME());
+            } else {
+                System.out.println("A road between " + city1.getNAME()
+                + " and " + city2.getNAME()
+                + " doesn't exist!");
+            }
+
+        } catch(NullPointerException e){
+            System.out.println("One or both of your city IDs were not recognized!");
+            helpMenu();
+        } catch (InputMismatchException e){
+            System.out.println("There was an error with your input.");
+            helpMenu();
+        }
     }
 
     /**
@@ -274,6 +311,17 @@ public class GraphBuilder {
         return found;
     }
 
+    /**
+     * method:  getUserInput
+     * purpose: display a '>' to prompt user input, then retrieve the input
+     *
+     * @return the user input
+     */
+    private static String getUserInput() {
+        Scanner in = new Scanner(System.in);
+        System.out.print("> ");
+        return in.nextLine();
+    }
 
     /**
      * method:  exit

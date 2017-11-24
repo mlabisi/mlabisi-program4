@@ -1,3 +1,16 @@
+/************************************************************
+ * File:    DirectedGraph.java
+ * Author:  Mora Labisi
+ * Course:  CS 241.01 Data Structures and Algorithms II
+ *
+ * Assignment:  Program Four
+ * Due:         Thursday, 11/30/2017
+ *
+ * Last Modified:   11/23/17
+ *
+ * Description:
+ * This java class is the representation of a City.
+ ************************************************************/
 public class City<T> {
 
     private final int CODE;
@@ -55,11 +68,15 @@ public class City<T> {
         return ELEVATION;
     }
 
-    public String toString(){
+    public String getInfo(){
         return "ID:\t\t" + ID +
                 "\nNAME:\t" + NAME +
                 "\nPOP:\t" + POPULATION +
                 "\nELV:\t" + ELEVATION +
                 "\n";
+    }
+
+    public String toString(){
+        return NAME;
     }
 }

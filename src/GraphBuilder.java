@@ -45,7 +45,8 @@ public class GraphBuilder {
                 + " D - Find the minimum distance between two cities\n"
                 + " I - Insert a road by entering two city codes and distance\n"
                 + " R - Remove an existing road by entering two city codes\n"
-                + " C - Display all of the map's cities and their data\n"
+                + " C - Display all of the names of the cities in the map\n"
+                + " M - Display all of the map's roads and distances\n"
                 + " H - display this menu\n"
                 + " E - exit the program");
     } // end helpMenu
@@ -78,6 +79,9 @@ public class GraphBuilder {
                         break;
                     case "C":
                         System.out.println(cities);
+                        break;
+                    case "M":
+                        viewEdges();
                         break;
                     case "H":
                         helpMenu();
@@ -180,7 +184,7 @@ public class GraphBuilder {
 
         try {
             id = getUserInput();
-            String info = ((DirectedGraph<City>)map).displayVertex(findCity(id.trim()));
+            String info = findCity(id.trim()).getInfo();
             System.out.print(info);
         } catch(NullPointerException e){
             System.out.println("That city ID was not recognized!");
@@ -309,6 +313,16 @@ public class GraphBuilder {
         }
 
         return found;
+    }
+
+    private static void viewCities(){
+        for (City aCity: cities) {
+            System.out.println(aCity.getInfo());
+        }
+    }
+
+    private static void viewEdges(){
+        ((DirectedGraph)map).displayEdges();
     }
 
     /**

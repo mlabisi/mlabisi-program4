@@ -160,6 +160,24 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
         return myVertex.toString();
     }
 
+    public void displayEdges(){
+        for (VertexInterface<T> vertex: vertices) {
+            Iterator<VertexInterface<T>> neighbors = vertex.getNeighborIterator();
+
+            if (!neighbors.hasNext()) {
+                System.out.println(vertex.getLabel() + " is not connected to any other cities.");
+            } else {
+                while (neighbors.hasNext()) {
+                    VertexInterface<T> nextNeighbor = neighbors.next();
+                    System.out.println(vertex.getLabel() +
+                            " --> " +
+                            nextNeighbor.getLabel() +
+                            " (" + ((Vertex<T>)vertex).getDistance(nextNeighbor) + ")");
+                }
+            }
+        }
+    }
+
     /**
      * method:  clear
      * purpose: removes all vertices and edges from the graph

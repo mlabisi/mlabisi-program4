@@ -113,10 +113,28 @@ public class Vertex<T> implements VertexInterface<T> {
                 if (!duplicateEdge) {
                     edgeList.add(new Edge(end, weight));
                     result = true;
+                } else{
+                    for (Edge anEdge : edgeList) {
+                        if(anEdge.getDest().equals(end)) {
+                             anEdge.setWeight(weight);
+                            break;
+                        }
+                    }
                 }
             }
         }
         return result;
+    }
+
+    public int getDistance(VertexInterface<T> end){
+        int distance = 0;
+        for (Edge anEdge : edgeList) {
+            if(anEdge.getDest().equals(end)) {
+                distance = anEdge.getWeight();
+                break;
+            }
+        }
+        return distance;
     }
 
     /**
@@ -287,17 +305,21 @@ public class Vertex<T> implements VertexInterface<T> {
         private VertexInterface<T> dest;
         private int weight;
 
-        public Edge(VertexInterface<T> dest, int weight) {
+        private Edge(VertexInterface<T> dest, int weight) {
             this.dest = dest;
             this.weight = weight;
         }
 
-        public VertexInterface<T> getDest() {
+        private VertexInterface<T> getDest() {
             return dest;
         }
 
-        public int getWeight() {
+        private int getWeight() {
             return weight;
+        }
+
+        private void setWeight(int weight){
+            this.weight = weight;
         }
     }
 

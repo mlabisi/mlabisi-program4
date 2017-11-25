@@ -106,7 +106,8 @@ public class City<T> {
      * @return  this city's info
      */
     public String getInfo(){
-        return "ID:\t\t" + ID +
+        return "CODE:\t" + CODE +
+                "\nID:\t\t" + ID +
                 "\nNAME:\t" + NAME +
                 "\nPOP:\t" + POPULATION +
                 "\nELV:\t" + ELEVATION +

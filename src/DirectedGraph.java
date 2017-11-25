@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 
 /************************************************************
  * File:    DirectedGraph.java
@@ -9,7 +11,7 @@ import java.util.Iterator;
  * Assignment:  Program Four
  * Due:         Thursday, 11/30/2017
  *
- * Last Modified:   11/23/17
+ * Last Modified:   11/24/17
  *
  * Description:
  * This java class is the implementation of the Directed
@@ -25,7 +27,7 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
      * This is the default constructor for the DirectedGraph
      * class.
      */
-    public DirectedGraph(){
+    public DirectedGraph() {
         vertices = new ArrayList<>();
         edgeCount = 0;
     }
@@ -63,12 +65,12 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
         VertexInterface<T> beginVertex = findVertex(begin);
         VertexInterface<T> endVertex = findVertex(end);
 
-        if((beginVertex != null) && (endVertex != null))
+        if ((beginVertex != null) && (endVertex != null))
             result = beginVertex.connect(endVertex, weight);
 
-        if(result && weight > 0){
+        if (result && weight > 0) {
             edgeCount++;
-        } else if (result && (weight == 0)){
+        } else if (result && (weight == 0)) {
             edgeCount--;
         }
 
@@ -78,15 +80,15 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
     /**
      * method:  findVertex
      * purpose: this helper method will find the vertex
-     *          whose label matches the given data
+     * whose label matches the given data
      *
      * @param value the value of the label
-     * @return  the vertex or null if not found
+     * @return the vertex or null if not found
      */
-    private VertexInterface<T> findVertex(T value){
+    private VertexInterface<T> findVertex(T value) {
         VertexInterface<T> found = null;
-        for(VertexInterface<T> vertex : vertices){
-            if(vertex.getLabel() == value){
+        for (VertexInterface<T> vertex : vertices) {
+            if (vertex.getLabel() == value) {
                 found = vertex;
             }
         }
@@ -111,12 +113,12 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
         VertexInterface<T> beginVertex = findVertex(begin);
         VertexInterface<T> endVertex = findVertex(end);
 
-        if((beginVertex != null) && (endVertex != null)){
+        if ((beginVertex != null) && (endVertex != null)) {
             Iterator<VertexInterface<T>> neighbors = beginVertex.getNeighborIterator();
 
-            while(!found && neighbors.hasNext()){
+            while (!found && neighbors.hasNext()) {
                 VertexInterface<T> nextNeighbor = neighbors.next();
-                if(endVertex.equals(nextNeighbor)){
+                if (endVertex.equals(nextNeighbor)) {
                     found = true;
                 }
             }
@@ -159,8 +161,8 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
         return edgeCount;
     }
 
-    public void displayEdges(){
-        for (VertexInterface<T> vertex: vertices) {
+    public void displayEdges() {
+        for (VertexInterface<T> vertex : vertices) {
             Iterator<VertexInterface<T>> neighbors = vertex.getNeighborIterator();
 
             if (!neighbors.hasNext()) {
@@ -171,7 +173,7 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
                     System.out.println(vertex.getLabel() +
                             " --> " +
                             nextNeighbor.getLabel() +
-                            " (" + ((Vertex<T>)vertex).getDistance(nextNeighbor) + ")");
+                            " (" + ((Vertex<T>) vertex).getDistance(nextNeighbor) + ")");
                 }
             }
         }
@@ -199,6 +201,95 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
      */
     @Override
     public String getShortestPath(T begin, T end) {
-        return null;
+        StringBuilder str = new StringBuilder();
+        int distance = 0;
+        String route = "";
+
+        VertexInterface<T> beginVertex = findVertex(begin);
+        VertexInterface<T> endVertex = findVertex(end);
+        ArrayList info = dijkstra(beginVertex, endVertex);
+        route = (String) info.get(1);
+        distance = (Integer) info.get(0);
+
+        if(distance != 1000000) {
+            str.append("The minimum distance between ").append(beginVertex.getLabel())
+                    .append(" and ").append(endVertex.getLabel()).append(" is ")
+                    .append(distance).append(" through the route ")
+                    .append(route);
+        } else{
+            str.append("There is no route between ").append(beginVertex.getLabel())
+                    .append(" and ").append(endVertex.getLabel())
+                    .append("!");
+        }
+
+        return str.toString();
     }
+
+    @SuppressWarnings("unchecked")
+    private ArrayList dijkstra(VertexInterface<T> begin, VertexInterface<T> end) {
+        ArrayList info = new ArrayList();
+        StringBuilder path = new StringBuilder();
+        for (VertexInterface<T> vertex : vertices) {
+            vertex.unvisit();
+            vertex.setCost(1000000);
+            vertex.setPredecessor(null);
+        }
+
+        boolean done = false;
+
+        Comparator<VertexInterface<T>> comparator = new VertexComparator();
+        PriorityQueue<VertexInterface<T>> vertexQueue = new PriorityQueue<>(comparator);
+
+        begin.setCost(0);
+        vertexQueue.add(begin);
+
+        while (!done && !vertexQueue.isEmpty()) {
+            VertexInterface<T> current = vertexQueue.remove();
+
+            if (!current.isVisited()) {
+                current.visit();
+
+                if (begin.equals(end)) {
+                    done = true;
+                } else {
+                    Iterator<VertexInterface<T>> neighbors = current.getNeighborIterator();
+
+                    while (neighbors.hasNext()) {
+                        VertexInterface<T> neighbor = neighbors.next();
+                        int pathWeight = ((Vertex<T>) current).getDistance(neighbor);
+
+                        if (!neighbor.isVisited()) {
+                            int neighborCost = pathWeight + current.getCost();
+                            neighbor.setCost(neighborCost);
+                            neighbor.setPredecessor(current);
+                            vertexQueue.add(neighbor);
+                        } // end if
+                    } // end while
+                } // end if else
+            } // end if
+        } // end while
+
+        int pathCost = end.getCost();
+        path.append(end.getLabel());
+
+        VertexInterface<T> current = end;
+
+        while (current.hasPredecessor()) {
+            current = current.getPredecessor();
+            path.insert(0, " --> ");
+            path.insert(0, current.getLabel());
+        } // end while
+
+        info.add(pathCost);
+        info.add(path.toString());
+
+        return info;
+    } // end dijkstra
+
+    private class VertexComparator implements Comparator<VertexInterface<T>> {
+        public int compare(VertexInterface<T> vertex1, VertexInterface<T> vertex2) {
+            return vertex1.compareTo(vertex2);
+        }
+    }
+
 }

@@ -7,14 +7,14 @@ import java.util.Iterator;
  * Assignment:  Program Four
  * Due:         Thursday, 11/30/2017
  *
- * Last Modified:   11/20/17
+ * Last Modified:   11/24/17
  *
  * Description:
  * This java interface is the implementation of the Vertex
  * object in a Graph. It includes the method signatures
  * for the required functions of a Vertex.
  ************************************************************/
-public interface VertexInterface<T> {
+public interface VertexInterface<T> extends Comparable<VertexInterface<T>> {
 
     /**
      * method:  getLabel
@@ -122,14 +122,17 @@ public interface VertexInterface<T> {
      * purpose: records the shortest weight of a path
      *          to this vertex
      */
-    public void setWeight(int weight);
+    public void setCost(int weight);
 
     /**
-     * method:  getWeight
+     * method:  getCost
      * purpose: gets the recorded cost of the path to this
      *          vertex
      *
      * @return  the cost of the path
      */
-    public int getWeight();
+    public int getCost();
+
+    @Override
+    public int compareTo(VertexInterface<T> other);
 }

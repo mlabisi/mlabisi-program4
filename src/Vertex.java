@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  * Assignment:  Program Four
  * Due:         Thursday, 11/30/2017
  *
- * Last Modified:   11/23/17
+ * Last Modified:   11/24/17
  *
  * Description:
  * This java class is the implementation of the Vertex
@@ -18,7 +18,7 @@ import java.util.NoSuchElementException;
  * that represents the Edge object and a Weight and a Neighbor
  * Iterator.
  ************************************************************/
-public class Vertex<T> implements VertexInterface<T> {
+public class Vertex<T> implements VertexInterface<T>{
     private T label;
     private ArrayList<Edge> edgeList;
     private VertexInterface<T> previous;
@@ -140,26 +140,26 @@ public class Vertex<T> implements VertexInterface<T> {
     // D I J K S T R A ' S   H E L P E R   M E T H O D S
 
     /**
-     * method:  getWeight
+     * method:  getCost
      * purpose: gets the recorded cost of the path to this
      * vertex
      *
      * @return the cost of the path
      */
     @Override
-    public int getWeight() {
+    public int getCost() {
         return weight;
     }
 
     /**
-     * method:  setWeight
+     * method:  setCost
      * purpose: records the shortest weight of a path
      * to this vertex
      *
      * @param weight
      */
     @Override
-    public void setWeight(int weight) {
+    public void setCost(int weight) {
         this.weight = weight;
     }
 
@@ -282,6 +282,19 @@ public class Vertex<T> implements VertexInterface<T> {
         edgeList.removeAll(toRemove);
     }
 
+    @Override
+    public int compareTo(VertexInterface<T> other) {
+        int value = 0;
+        if(getCost() < other.getCost()){
+            value = -1;
+        } else if(getCost() > other.getCost()){
+            value = 1;
+        } else
+            value = 0;
+
+        return value;
+    }
+
     /**
      * method:  equals
      * purpose: overrides the equals method and constitutes two
@@ -345,7 +358,7 @@ public class Vertex<T> implements VertexInterface<T> {
         }
 
         /**
-         * method:  getWeight
+         * method:  getCost
          * purpose: gets the weight of the edge
          *
          * @return  the weight of the edge
@@ -355,7 +368,7 @@ public class Vertex<T> implements VertexInterface<T> {
         }
 
         /**
-         * method:  setWeight
+         * method:  setCost
          * purpose: sets the weight of this edge
          *
          * @param weight    the weight to be set

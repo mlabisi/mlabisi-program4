@@ -18,7 +18,7 @@ import java.util.NoSuchElementException;
  * that represents the Edge object and a Weight and a Neighbor
  * Iterator.
  ************************************************************/
-public class Vertex<T> implements VertexInterface<T>{
+public class Vertex<T> implements VertexInterface<T> {
     private T label;
     private ArrayList<Edge> edgeList;
     private VertexInterface<T> previous;
@@ -56,10 +56,10 @@ public class Vertex<T> implements VertexInterface<T>{
     /**
      * method:  getDistance
      * purpose: gets the distance of the edge between this vertex
-     *          and a given destination vertex
+     * and a given destination vertex
      *
-     * @param end   the destination vertex
-     * @return  the distance
+     * @param end the destination vertex
+     * @return the distance
      */
     public int getDistance(VertexInterface<T> end) {
         int distance = 0;
@@ -96,6 +96,7 @@ public class Vertex<T> implements VertexInterface<T>{
     }
 
     // P U B L I C   I N S T A N C E   M E T H O D S
+
     /**
      * method:  connect
      * purpose: connects this vertex to a given vertex with a
@@ -282,12 +283,20 @@ public class Vertex<T> implements VertexInterface<T>{
         edgeList.removeAll(toRemove);
     }
 
+    /**
+     * method:  compareTo
+     * purpose: accurately compares two vertices
+     *
+     * @param other the other Vertex
+     * @return the appropriate integer representation
+     * of the comparison
+     */
     @Override
     public int compareTo(VertexInterface<T> other) {
         int value = 0;
-        if(getCost() < other.getCost()){
+        if (getCost() < other.getCost()) {
             value = -1;
-        } else if(getCost() > other.getCost()){
+        } else if (getCost() > other.getCost()) {
             value = 1;
         } else
             value = 0;
@@ -320,7 +329,7 @@ public class Vertex<T> implements VertexInterface<T>{
      * method:  toString
      * purpose: gets the String representation of the vertex
      *
-     * @return  the vertex's label as a String
+     * @return the vertex's label as a String
      */
     @Override
     public String toString() {
@@ -339,8 +348,8 @@ public class Vertex<T> implements VertexInterface<T>{
         /**
          * This is the default constructor for the Edge class.
          *
-         * @param dest  the destination vertex
-         * @param weight    the weight of the edge
+         * @param dest   the destination vertex
+         * @param weight the weight of the edge
          */
         private Edge(VertexInterface<T> dest, int weight) {
             this.dest = dest;
@@ -351,7 +360,7 @@ public class Vertex<T> implements VertexInterface<T>{
          * method:  getDest
          * purpose: gets the destination vertex
          *
-         * @return  the destination vertex
+         * @return the destination vertex
          */
         private VertexInterface<T> getDest() {
             return dest;
@@ -361,7 +370,7 @@ public class Vertex<T> implements VertexInterface<T>{
          * method:  getCost
          * purpose: gets the weight of the edge
          *
-         * @return  the weight of the edge
+         * @return the weight of the edge
          */
         private int getWeight() {
             return weight;
@@ -371,7 +380,7 @@ public class Vertex<T> implements VertexInterface<T>{
          * method:  setCost
          * purpose: sets the weight of this edge
          *
-         * @param weight    the weight to be set
+         * @param weight the weight to be set
          */
         private void setWeight(int weight) {
             this.weight = weight;

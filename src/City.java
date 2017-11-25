@@ -6,7 +6,7 @@
  * Assignment:  Program Four
  * Due:         Thursday, 11/30/2017
  *
- * Last Modified:   11/23/17
+ * Last Modified:   11/24/17
  *
  * Description:
  * This java class is the representation of a City.

@@ -133,6 +133,14 @@ public interface VertexInterface<T> extends Comparable<VertexInterface<T>> {
      */
     public int getCost();
 
+    /**
+     * method:  compareTo
+     * purpose: accurately compares two vertices
+     *
+     * @param other the other Vertex
+     * @return the appropriate integer representation
+     * of the comparison
+     */
     @Override
     public int compareTo(VertexInterface<T> other);
 }

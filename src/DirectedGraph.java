@@ -225,6 +225,16 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
         return str.toString();
     }
 
+    /**
+     * method:  dijkstra
+     * purpose: implementation of dijkstra's algorithm to find
+     *          cheapest path between vertices
+     *
+     * @param begin the beginning vertex
+     * @param end   the ending vertex
+     * @return  an ArrayList containing the distance of and vertices in
+     *          the cheapest path
+     */
     @SuppressWarnings("unchecked")
     private ArrayList dijkstra(VertexInterface<T> begin, VertexInterface<T> end) {
         ArrayList info = new ArrayList();
@@ -286,6 +296,10 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
         return info;
     } // end dijkstra
 
+    /**
+     * This private class is used to organize the Priority Queue
+     * of vertices.
+     */
     private class VertexComparator implements Comparator<VertexInterface<T>> {
         public int compare(VertexInterface<T> vertex1, VertexInterface<T> vertex2) {
             return vertex1.compareTo(vertex2);

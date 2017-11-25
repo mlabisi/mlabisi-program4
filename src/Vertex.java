@@ -23,7 +23,7 @@ public class Vertex<T> implements VertexInterface<T> {
     private ArrayList<Edge> edgeList;
     private VertexInterface<T> previous;
     private boolean visited;
-    private int weight;
+    private int cost;
 
     // C O N S T R U C T O R
 
@@ -37,7 +37,7 @@ public class Vertex<T> implements VertexInterface<T> {
         edgeList = new ArrayList<>();
         visited = false;
         previous = null;
-        weight = 0;
+        cost = 0;
     }
 
     // G E T T E R S
@@ -103,7 +103,7 @@ public class Vertex<T> implements VertexInterface<T> {
      * weighted edge
      *
      * @param end    the vertex that ends the egde
-     * @param weight the weight of the edge
+     * @param weight the cost of the edge
      * @return true or false depending on whether or not the
      * edge was added
      */
@@ -149,19 +149,19 @@ public class Vertex<T> implements VertexInterface<T> {
      */
     @Override
     public int getCost() {
-        return weight;
+        return cost;
     }
 
     /**
      * method:  setCost
-     * purpose: records the shortest weight of a path
+     * purpose: records the shortest cost of a path
      * to this vertex
      *
-     * @param weight
+     * @param cost
      */
     @Override
-    public void setCost(int weight) {
-        this.weight = weight;
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     /**
@@ -267,7 +267,7 @@ public class Vertex<T> implements VertexInterface<T> {
     /**
      * method:  updateEdges
      * purpose: this helper method removes any edges
-     * whose weight is 0
+     * whose cost is 0
      */
     private void updateEdges() {
         int i = 0;
@@ -349,7 +349,7 @@ public class Vertex<T> implements VertexInterface<T> {
          * This is the default constructor for the Edge class.
          *
          * @param dest   the destination vertex
-         * @param weight the weight of the edge
+         * @param weight the cost of the edge
          */
         private Edge(VertexInterface<T> dest, int weight) {
             this.dest = dest;
@@ -368,9 +368,9 @@ public class Vertex<T> implements VertexInterface<T> {
 
         /**
          * method:  getCost
-         * purpose: gets the weight of the edge
+         * purpose: gets the cost of the edge
          *
-         * @return the weight of the edge
+         * @return the cost of the edge
          */
         private int getWeight() {
             return weight;
@@ -378,9 +378,9 @@ public class Vertex<T> implements VertexInterface<T> {
 
         /**
          * method:  setCost
-         * purpose: sets the weight of this edge
+         * purpose: sets the cost of this edge
          *
-         * @param weight the weight to be set
+         * @param weight the cost to be set
          */
         private void setWeight(int weight) {
             this.weight = weight;

@@ -211,7 +211,7 @@ public class DirectedGraph<T> implements WeightedGraphInterface<T> {
         route = (String) info.get(1);
         distance = (Integer) info.get(0);
 
-        if(distance != 1000000) {
+        if(!route.equalsIgnoreCase(endVertex.getLabel().toString())) {
             str.append("The minimum distance between ").append(beginVertex.getLabel())
                     .append(" and ").append(endVertex.getLabel()).append(" is ")
                     .append(distance).append(" through the route ")
